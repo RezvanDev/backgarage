@@ -1,7 +1,6 @@
-import { Controller, Post, UploadedFile, UseInterceptors, Res } from '@nestjs/common';
+import { Controller, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ImageService } from './image.service';
-import { Response } from 'express';
 
 @Controller('image')
 export class ImageController {
@@ -9,15 +8,15 @@ export class ImageController {
 
   @Post('')
   @UseInterceptors(FileInterceptor('image'))
-  async uploadImage(@UploadedFile() image?: any, @Res() res: Response): Promise<any> {
+  async uploadImage(@UploadedFile() image: any): Promise<any> {
     if (!image) {
-      return res.status(200).json({ message: 'Изображение не было загружено', imageUrl: null });
+      return { message: 'Изображение не было загружено', imageUrl: null };
     }
     try {
       const result = await this.imageService.uploadImage(image);
-      return res.status(200).json(result);
+      return result;
     } catch (error) {
-      return res.status(500).json({ message: 'Ошибка при загрузке файла', error: error.message });
+      return { message: 'Ошибка при загрузке файла', error: error.message };
     }
   }
 }
