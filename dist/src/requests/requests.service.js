@@ -22,6 +22,11 @@ let RequestService = class RequestService {
         const requests = await this.prisma.request.findMany({
             where: {
                 carId: carId,
+                parts: {
+                    every: {
+                        orderId: null
+                    }
+                }
             },
             include: {
                 parts: {
@@ -48,7 +53,7 @@ let RequestService = class RequestService {
         const user = await this.prisma.user.findUnique({ where: { id: request.userId } });
         const car = await this.prisma.car.findUnique({ where: { id: request.carId } });
         const message = `Ваша заявка на машину ${car.brand} принята`;
-        await this.botService.sendMessage(user.telegramId, message, 'https://mygarage-webapp-1wvpi27e8-ceos-projects-828a268d.vercel.app/requests');
+        await this.botService.sendMessage(user.telegramId, message, 'https://mygarage-webapp.vercel.app/requests');
     }
     async getById(id) {
         return this.prisma.request.findUnique({
@@ -59,7 +64,7 @@ let RequestService = class RequestService {
     async createRequest({ userId, carId, name, image }) {
         const data = {
             name,
-            image,
+            image: image || null,
             car: {
                 connect: { id: carId }
             },
@@ -78,6 +83,7 @@ let RequestService = class RequestService {
         });
         const sendMessagePromises = sellersWithNotifications.map(async (user) => {
             const message = `Новая заявка на деталь на машину ${car.brand}`;
+            await this.botService.sendMessage(user.telegramId, message, 'https://mygarage-webapp.vercel.app/seller-panel/seller-actual-orders');
         });
         await Promise.all(sendMessagePromises);
         const user = await this.prisma.user.findUnique({
