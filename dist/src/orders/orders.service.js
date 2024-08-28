@@ -80,7 +80,7 @@ let OrdersService = class OrdersService {
                 },
                 deliveryAddress,
                 phoneNumber,
-                paymentScreenshot: screenshot || null
+                paymentScreenshot: screenshot
             },
         });
         await this.prisma.cart.update({
@@ -102,7 +102,7 @@ let OrdersService = class OrdersService {
         });
         const message = `Новый заказ на ${cart.parts.length} деталей`;
         const promises = managers.map(async (manager) => {
-            await this.botService.sendMessage(manager.telegramId, message, 'https://mygarage-webapp.vercel.app/manager/actual-orders');
+            await this.botService.sendMessage(manager.telegramId, message, 'https://mygarage-webapp-nawq6gs1x-ceos-projects-828a268d.vercel.app/manager/actual-orders');
         });
         await Promise.all(promises);
         return order;

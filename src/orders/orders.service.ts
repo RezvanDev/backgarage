@@ -60,7 +60,7 @@ export class OrdersService {
         })
     }
 
-    async createOrder(buyerId: number, cartId: number, deliveryAddress: string, phoneNumber: string, screenshot?: string) {
+    async createOrder(buyerId: number, cartId: number , deliveryAddress: string, phoneNumber: string, screenshot: string) {
         const cart = await this.prisma.cart.findUnique({
             where: {
                 id: cartId
@@ -80,17 +80,17 @@ export class OrdersService {
 
         const order = await this.prisma.order.create({
             data: {
-              buyerId,
-              sellerId: cart.parts[0].sellerId,
-              price: cart.price * 1.05,
-              parts: {
-                connect: cart.parts.map(part => ({ id: part.id }))
-              },
-              deliveryAddress,
-              phoneNumber,
-              paymentScreenshot: screenshot || null
+                buyerId,
+                sellerId: cart.parts[0].sellerId,
+                price: cart.price * 1.05,
+                parts: {
+                    connect: cart.parts.map(part => ({ id: part.id }))
+                },
+                deliveryAddress,
+                phoneNumber,
+                paymentScreenshot: screenshot
             },
-          });
+        });
 
         await this.prisma.cart.update({
             where: {

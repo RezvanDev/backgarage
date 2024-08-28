@@ -21,20 +21,20 @@ export class PartService {
         })
     }
 
-    createPart(requestId: number, name: string, isNew: boolean, isOriginal: boolean, manufacturer: string, numberOrName: string, price: number, image: string | null, sellerId: number, carId: number) {
+    createPart(requestId: number, name: string, isNew: boolean, isOriginal: boolean, manufacturer: string, numberOrName: string, price: number, image: string, sellerId: number, carId: number) {
         return this.prisma.part.create({
-          data: {
-            name,
-            new: isNew,
-            original: isOriginal,
-            manufacturer,
-            numberOrName,
-            price,
-            image: image || null,
-            sellerId,
-            carId,
-            requestId
-          }
+            data: {
+                name,
+                new: isNew,
+                original: isOriginal,
+                manufacturer,
+                numberOrName,
+                price,
+                image,
+                sellerId,
+                carId,
+                requestId
+            }
         })
-      }
+    }
 }

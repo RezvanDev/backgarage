@@ -39,7 +39,7 @@ let PartService = class PartService {
                 manufacturer,
                 numberOrName,
                 price,
-                image: image || null,
+                image,
                 sellerId,
                 carId,
                 requestId

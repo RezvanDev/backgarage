@@ -1,2 +1,0 @@
--- AlterTable
-ALTER TABLE "Car" ALTER COLUMN "image" DROP NOT NULL;

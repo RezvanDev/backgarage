@@ -81,7 +81,7 @@ export declare class OrdersService {
         deliveryAddress: string;
         phoneNumber: string;
     }>;
-    createOrder(buyerId: number, cartId: number, deliveryAddress: string, phoneNumber: string, screenshot?: string): Promise<{
+    createOrder(buyerId: number, cartId: number, deliveryAddress: string, phoneNumber: string, screenshot: string): Promise<{
         id: number;
         sellerId: number;
         buyerId: number;

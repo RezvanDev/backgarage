@@ -60,7 +60,7 @@ model User {
 
 model Car {
   id       Int       @id @default(autoincrement())
-  image    String?
+  image    String
   brand    Brands
   model    String
   number   String

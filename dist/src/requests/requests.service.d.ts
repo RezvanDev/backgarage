@@ -52,7 +52,7 @@ export declare class RequestService {
         userId: number;
         carId: number;
         name: string;
-        image?: string;
+        image: string;
     }): Promise<any>;
     getByCarNotifications(userId: number): Promise<({
         car: {
